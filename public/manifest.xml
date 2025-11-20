@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+           xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+           xsi:type="MailApp">
+  
+  <!-- Basic Settings -->
+  <Id>a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>Your Company</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="Outlook MVP Add-in"/>
+  <Description DefaultValue="MVP test add-in with a dummy button"/>
+  <IconUrl DefaultValue="https://via.placeholder.com/64x64"/>
+  <HighResolutionIconUrl DefaultValue="https://via.placeholder.com/128x128"/>
+  <SupportUrl DefaultValue="https://www.contoso.com/support"/>
+  
+  <!-- Hosts -->
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+  
+  <!-- Requirements -->
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  
+  <!-- Form Settings -->
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://localhost:3000/taskpane.html"/>
+        <RequestedHeight>250</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+  
+  <!-- Permissions -->
+  <Permissions>ReadWriteItem</Permissions>
+  
+  <!-- Rules -->
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+  
+  <!-- Version Overrides -->
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides/1.1" xsi:type="VersionOverridesV1_1">
+      
+      <Requirements>
+        <bt:Sets DefaultMinVersion="1.3">
+          <bt:Set Name="Mailbox"/>
+        </bt:Sets>
+      </Requirements>
+      
+      <Hosts>
+        <Host xsi:type="MailHost">
+          
+          <!-- Form Factor: Desktop -->
+          <DesktopFormFactor>
+            <FunctionFile resid="Commands.Url"/>
+            
+            <!-- Message Compose Command Surface -->
+            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
+              <OfficeTab id="TabDefault">
+                <Group id="msgComposeGroup">
+                  <Label resid="GroupLabel"/>
+                  
+                  <!-- Dummy Button -->
+                  <Control xsi:type="Button" id="msgComposeDummyButton">
+                    <Label resid="DummyButton.Label"/>
+                    <Supertip>
+                      <Title resid="DummyButton.Label"/>
+                      <Description resid="DummyButton.Tooltip"/>
+                    </Supertip>
+                    <Icon>
+                      <bt:Image size="16" resid="Icon.16x16"/>
+                      <bt:Image size="32" resid="Icon.32x32"/>
+                      <bt:Image size="80" resid="Icon.80x80"/>
+                    </Icon>
+                    <Action xsi:type="ExecuteFunction">
+                      <FunctionName>dummyButtonClicked</FunctionName>
+                    </Action>
+                  </Control>
+                  
+                </Group>
+              </OfficeTab>
+            </ExtensionPoint>
+            
+          </DesktopFormFactor>
+        </Host>
+      </Hosts>
+      
+      <!-- Resources -->
+      <Resources>
+        <bt:Images>
+          <bt:Image id="Icon.16x16" DefaultValue="https://via.placeholder.com/16x16"/>
+          <bt:Image id="Icon.32x32" DefaultValue="https://via.placeholder.com/32x32"/>
+          <bt:Image id="Icon.80x80" DefaultValue="https://via.placeholder.com/80x80"/>
+        </bt:Images>
+        <bt:Urls>
+          <bt:Url id="Commands.Url" DefaultValue="https://localhost:3000/commands.html"/>
+          <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
+        </bt:Urls>
+        <bt:ShortStrings>
+          <bt:String id="GroupLabel" DefaultValue="MVP Test"/>
+          <bt:String id="DummyButton.Label" DefaultValue="Test Button"/>
+        </bt:ShortStrings>
+        <bt:LongStrings>
+          <bt:String id="DummyButton.Tooltip" DefaultValue="This is a dummy button to test the manifest"/>
+        </bt:LongStrings>
+      </Resources>
+      
+    </VersionOverrides>
+  </VersionOverrides>
+  
+</OfficeApp>
